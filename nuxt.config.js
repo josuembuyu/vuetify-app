@@ -44,7 +44,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    
+    baseURL: 'https://618c3b3bded7fb0017bb94cd.mockapi.io/'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

@@ -74,73 +74,88 @@
                 <span class="text-h5">Enreigstrement</span>
                 </v-card-title>
                 <v-card-text>
-                <v-container>
-                    <v-row>
-                    <v-col
-                        cols="12"
-                        sm="12"
+                    <v-form
+                    ref="form"
+                    lazy-validation
+                    id="create-form"
+                    @submit="create"
                     >
-                        <v-select
-                        :items="['Skiing']"
-                        label="Enseignant"
-                        ></v-select>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                        md="12"
-                    >
-                        <v-text-field
-                        type="date"
-                        label="Date"
-                        required
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-text-field
-                        label="Heure d'arrivée"
-                        type="time"
-                        required
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-text-field
-                        label="Heure de depart"
-                        type="time"
-                        required
-                        ></v-text-field>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                        md="12"
-                    >
-                        <v-text-field
-                        type="text"
-                        label="Matière enseignée"
-                        required
-                        ></v-text-field>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                    >
-                        <v-select
-                        :items="['Skiing']"
-                        label="Promotion"
-                        ></v-select>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                    >
-                        <v-select
-                        :items="['Skiing']"
-                        label="Cours"
-                        ></v-select>
-                    </v-col>
-                    </v-row>
-                </v-container>
+                         <v-container>
+                            <v-row>
+                            <v-col
+                                cols="12"
+                                sm="12"
+                            >
+                                <v-select
+                                v-model="enseignant"
+                                :items="['Skiing']"
+                                label="Enseignant"
+                                ></v-select>
+                            </v-col>
+                            <v-col
+                                cols="12"
+                                sm="6"
+                                md="12"
+                            >
+                                <v-text-field
+                                type="date"
+                                v-model="date"
+                                label="Date"
+                                required
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field
+                                label="Heure d'arrivée"
+                                v-model="heurearriv"
+                                type="time"
+                                required
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field
+                                v-model="heuredepart"
+                                label="Heure de depart"
+                                type="time"
+                                required
+                                ></v-text-field>
+                            </v-col>
+                            <v-col
+                                cols="12"
+                                sm="6"
+                                md="12"
+                            >
+                                <v-text-field
+                                v-model="matiere"
+                                type="text"
+                                label="Matière enseignée"
+                                required
+                                ></v-text-field>
+                            </v-col>
+                            <v-col
+                                cols="12"
+                                sm="6"
+                            >
+                                <v-select
+                                v-model="promotion"
+                                :items="['Skiing']"
+                                label="Promotion"
+                                ></v-select>
+                            </v-col>
+                            <v-col
+                                cols="12"
+                                sm="6"
+                            >
+                                <v-select
+                                v-model="cours"
+                                :items="['Skiing']"
+                                label="Cours"
+                                ></v-select>
+                            </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-form>
+                   
                 </v-card-text>
                 <v-card-actions>
                 <v-spacer></v-spacer>
@@ -152,10 +167,12 @@
                     Fermer
                 </v-btn>
                 <v-btn
-                    color="primary"
-                    @click="dialog = false"
+                    :disabled="loading.state"
+                    form="create-form" 
+                    type="submit"
+                    :color="loading.state ? '' : 'success'"
                 >
-                    Sauvergarder
+                {{ loading.text }}
                 </v-btn>
                 </v-card-actions>
             </v-card>
@@ -172,24 +189,111 @@
 export default {
   data(){
     return {
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ],
-      desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          }
-      ],
-      dialog: false,
+        date: null,
+        enseignant: null,
+        heurearriv: null,
+        heuredepart: null,
+        cours: null,
+        matiere: null,
+        promotion: null,
+        dialog: false,
+        dispenser: [],
+        enseignants: [],
+        promotions: [],
+        cours: [],
+        message: {
+            type: "danger",
+            text: null,
+            state: false
+        },
+        loading: {
+            text: "Sauvegarder",
+            state: false
+        }
     }
+  },
+  methods: {
+    async getDispenser(){
+        try {
+            let response = await this.$axios.get('https://618c962dded7fb0017bb9603.mockapi.io/dispenser');
+            this.dispenser = response;
+        } catch (error) {
+            alert("Une erreur est survenue lors de la recuperation des données, rechargez la page")
+        }
+    },
+    async getEnseignant(){
+
+    },
+    async getPromotions(){
+        
+    },
+    async getCours(){
+        
+    },
+    async create(e){
+        e.preventDefault()
+
+        this.loading = {
+            text : "Patientez...",
+            state : true
+        }
+
+        try {
+            let payload = {
+                "date": this.date,
+                "enseignant": this.enseignant,
+                "heurearriv": this.heurearriv,
+                "heuredepart": this.heuredepart,
+                "cours": this.cours,
+                "matiere": this.matiere,
+                "promotion": this.promotion,
+            }
+
+            let response = await this.$axios.post('https://618c962dded7fb0017bb9603.mockapi.io/dispenser', payload)
+
+            if (response) {
+                this.message = {
+                    type: "success",
+                    text: "L'enregistrement a été crée avec succès",
+                    state: true
+                }
+                this.loading = {
+                    text: "Sauvegarder",
+                    state: false
+                }
+
+                window.location.reload(true)
+
+            } else {
+                this.message = {
+                    type: "danger",
+                    text: "Une erreur est survenue lors de la création d'un departement",
+                    state: true
+                }
+                this.loading = {
+                    text: "Ressayez",
+                    state: false
+                }
+            }
+
+        } catch (error) {
+                this.message = {
+                    type: "alert-danger",
+                    text: error,
+                    state: true
+                }
+                this.loading = {
+                    text: "Ressayez",
+                    state: false
+                }
+        }
+    }
+  },
+  mounted(){
+      this.getDispenser()
+      this.getEnseignant()
+      this.getPromotions()
+      this.getCours()
   }
 }
 </script>
