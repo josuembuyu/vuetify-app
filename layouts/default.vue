@@ -99,19 +99,7 @@ export default {
         {
           title: 'Cours',
           to: '/cours'
-        },
-        {
-          title: 'Local',
-          to: '/local'
-        },
-        {
-          title: 'Batiment',
-          to: '/batiment'
-        },
-        {
-          title: 'Niveau',
-          to: '/batiment'
-        },
+        }
       ],
       miniVariant: false,
       right: true,

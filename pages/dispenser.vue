@@ -34,16 +34,16 @@
                   </thead>
                   <tbody>
                     <tr
-                      v-for="item in desserts"
-                      :key="item.name"
+                      v-for="item in dispenser.data"
+                      :key="item.id"
                     >
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.calories }}</td>
-                      <td>{{ item.calories }}</td>
-                      <td>{{ item.calories }}</td>
-                      <td>{{ item.calories }}</td>
-                      <td>{{ item.calories }}</td>
-                      <td>{{ item.calories }}</td>
+                      <td>{{ item.date }}</td>
+                      <td>{{ item.enseignant }}</td>
+                      <td>{{ item.heurearriv }}</td>
+                      <td>{{ item.heuredepart }}</td>
+                      <td>{{ item.cours }}</td>
+                      <td>{{ item.matiere }}</td>
+                      <td>{{ item.promotion }}</td>
                     </tr>
                   </tbody>
                 </template>
@@ -74,6 +74,10 @@
                 <span class="text-h5">Enreigstrement</span>
                 </v-card-title>
                 <v-card-text>
+                    <v-alert
+                    v-if="message.state"
+                    :type="message.type"
+                    > {{ message.text }}</v-alert>
                     <v-form
                     ref="form"
                     lazy-validation
@@ -88,7 +92,7 @@
                             >
                                 <v-select
                                 v-model="enseignant"
-                                :items="['Skiing']"
+                                :items="enseignants"
                                 label="Enseignant"
                                 ></v-select>
                             </v-col>
@@ -138,7 +142,7 @@
                             >
                                 <v-select
                                 v-model="promotion"
-                                :items="['Skiing']"
+                                :items="promotions"
                                 label="Promotion"
                                 ></v-select>
                             </v-col>
@@ -148,7 +152,7 @@
                             >
                                 <v-select
                                 v-model="cours"
-                                :items="['Skiing']"
+                                :items="coursList"
                                 label="Cours"
                                 ></v-select>
                             </v-col>
@@ -200,7 +204,7 @@ export default {
         dispenser: [],
         enseignants: [],
         promotions: [],
-        cours: [],
+        coursList: [],
         message: {
             type: "danger",
             text: null,
@@ -222,13 +226,58 @@ export default {
         }
     },
     async getEnseignant(){
+        try {
+            let response = await this.$axios.get('https://618c962dded7fb0017bb9603.mockapi.io/enseignant');
+            if (response.data) {
+                var items = response.data
+                var newArray = []
 
+                items.map(item => {
+                    newArray.push(item.matricule + " - " + item.prenom + " " + item.nom)
+                })
+
+                this.enseignants = newArray;
+
+            }
+        } catch (error) {
+            alert("Une erreur est survenue, veuillez recharger la page")
+        }
     },
     async getPromotions(){
-        
+        try {
+            let response = await this.$axios.get('/promotion');
+            if (response.data) {
+                var items = response.data
+                var newArray = []
+
+                items.map(item => {
+                    newArray.push(item.promotion)
+                })
+
+                this.promotions = newArray;
+
+            }
+        } catch (error) {
+            alert("Une erreur est survenue, veuillez recharger la page")
+        }
     },
     async getCours(){
-        
+        try {
+            let response = await this.$axios.get('https://618c962dded7fb0017bb9603.mockapi.io/cours');
+            if (response.data) {
+                var items = response.data
+                var newArray = []
+
+                items.map(item => {
+                    newArray.push(item.cours)
+                })
+
+                this.coursList = newArray;
+
+            }
+        } catch (error) {
+            alert("Une erreur est survenue, veuillez recharger la page")
+        }
     },
     async create(e){
         e.preventDefault()

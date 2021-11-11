@@ -30,6 +30,10 @@
           </v-col>
           <v-col cols="12" sm="8" md="6">
             <v-card style="padding: 2em" class="mx-auto" elevation="2">
+                <v-alert
+                  v-if="message.state"
+                  :type="message.type"
+                > {{ message.text }}</v-alert>
                 <v-form
                   @submit="create"
                   id="create-form" 
