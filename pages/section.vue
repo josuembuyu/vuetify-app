@@ -9,13 +9,10 @@
                   <thead>
                     <tr>
                       <th class="text-left">
-                        CODEDEPART
-                      </th>
-                      <th class="text-left">
-                        DEP
-                      </th>
-                      <th class="text-left">
                         CODESEC
+                      </th>
+                      <th class="text-left">
+                        SEC
                       </th>
                     </tr>
                   </thead>
@@ -25,7 +22,6 @@
                       :key="item.name"
                     >
                       <td>{{ item.name }}</td>
-                      <td>{{ item.calories }}</td>
                       <td>{{ item.calories }}</td>
                     </tr>
                   </tbody>
@@ -43,23 +39,15 @@
                   <v-text-field
                     v-model="email"
                     :rules="emailRules"
-                    label="CODEDEPART"
+                    label="CODE SECTION"
                     required
                   ></v-text-field>
                   <v-text-field
                     v-model="email"
                     :rules="emailRules"
-                    label="DEPARTEMENT"
+                    label="SECTION"
                     required
                   ></v-text-field>
-
-                  <v-select
-                    v-model="select"
-                    :items="items"
-                    :rules="[v => !!v || 'Item is required']"
-                    label="Section"
-                    required
-                  ></v-select>
                   <v-row>
                     <v-col cols="12" sm="8" md="12">
                       <v-btn

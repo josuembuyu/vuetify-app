@@ -9,13 +9,13 @@
                   <thead>
                     <tr>
                       <th class="text-left">
-                        CODEDEPART
+                        CODE PROMO
                       </th>
                       <th class="text-left">
-                        DEP
+                        PROMO
                       </th>
                       <th class="text-left">
-                        CODESEC
+                        CODE DEPART
                       </th>
                     </tr>
                   </thead>
@@ -43,21 +43,20 @@
                   <v-text-field
                     v-model="email"
                     :rules="emailRules"
-                    label="CODEDEPART"
+                    label="CODE PROMO"
                     required
                   ></v-text-field>
                   <v-text-field
                     v-model="email"
                     :rules="emailRules"
-                    label="DEPARTEMENT"
+                    label="PROMO"
                     required
                   ></v-text-field>
-
                   <v-select
                     v-model="select"
                     :items="items"
                     :rules="[v => !!v || 'Item is required']"
-                    label="Section"
+                    label="DEPARTEMENT"
                     required
                   ></v-select>
                   <v-row>

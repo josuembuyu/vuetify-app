@@ -30,32 +30,8 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
+        <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -97,20 +73,50 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Departement',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
+          title: 'Section',
+          to: '/section'
+        },
+        {
+          title: 'Sexe',
+          to: '/sexe'
+        },
+        {
+          title: 'Promotion',
+          to: '/promotion'
+        },
+        {
+          title: 'Dispenser',
+          to: '/dispenser'
+        },
+        {
+          title: 'Enseignant',
+          to: '/enseignant'
+        },
+        {
+          title: 'Cours',
+          to: '/cours'
+        },
+        {
+          title: 'Local',
+          to: '/local'
+        },
+        {
+          title: 'Batiment',
+          to: '/batiment'
+        },
+        {
+          title: 'Niveau',
+          to: '/batiment'
+        },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'CONTROLE DES HEURES PRESTÉES'
     }
   }
 }

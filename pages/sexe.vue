@@ -9,13 +9,10 @@
                   <thead>
                     <tr>
                       <th class="text-left">
-                        CODEDEPART
+                        CODE SEXE
                       </th>
                       <th class="text-left">
-                        DEP
-                      </th>
-                      <th class="text-left">
-                        CODESEC
+                        SEXE
                       </th>
                     </tr>
                   </thead>
@@ -25,7 +22,6 @@
                       :key="item.name"
                     >
                       <td>{{ item.name }}</td>
-                      <td>{{ item.calories }}</td>
                       <td>{{ item.calories }}</td>
                     </tr>
                   </tbody>
@@ -43,21 +39,14 @@
                   <v-text-field
                     v-model="email"
                     :rules="emailRules"
-                    label="CODEDEPART"
+                    label="CODE SEXE"
                     required
                   ></v-text-field>
-                  <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="DEPARTEMENT"
-                    required
-                  ></v-text-field>
-
                   <v-select
                     v-model="select"
                     :items="items"
                     :rules="[v => !!v || 'Item is required']"
-                    label="Section"
+                    label="SEXE"
                     required
                   ></v-select>
                   <v-row>
@@ -88,23 +77,21 @@
 <script>
 
 export default {
-  data(){
+    data(){
     return {
       items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
+        'Masculin',
+        'Feminin'
       ],
       desserts: [
-          {
+            {
             name: 'Frozen Yogurt',
             calories: 159,
-          },
-          {
+            },
+            {
             name: 'Ice cream sandwich',
             calories: 237,
-          }
+            }
         ],
     }
   }
